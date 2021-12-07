@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^p(li0ab1+qj68tk)q@re96ni%42f^_vy&0f6f^^=4w0^e@w*u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['.localhost', 'radiant-coast-66907.herokuapp.com']
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoice.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'project_gamelog.urls'
@@ -123,6 +125,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'app_gamelog/statc')
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage,CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
