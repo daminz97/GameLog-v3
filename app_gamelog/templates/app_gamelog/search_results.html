@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="row">
+    {% for game in games %}
+    <div class="col-md-3 d-flex align-items-center justify-content-center">
+        <div class="card game-card">
+            <a class="game-card-link" href="{% url 'game_detail' game.id %}">
+                <img src="{{ game.image_url }}" class="card-img-top game-card-img">
+                <div class="card-body game-card-body">
+                    <h5 class="card-title game-card-title">{{ game.name }}</h5>
+                    {% if owned %}<span class="badge rounded-pill bg-success card-text game-own-status">Owned</span>{% endif %}
+                    <span class="badge rounded-pill bg-primary card-text game-card-text">{{ game.genre }}</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>

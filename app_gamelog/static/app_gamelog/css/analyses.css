@@ -1,0 +1,28 @@
+.graph-content {
+    width: 50%;
+    margin: 2% auto;
+}
+.status-code {
+    vertical-align: middle;
+    margin: auto 0;
+}
+.chart-title {
+    justify-content: start;
+}
+.budget-status {
+    justify-content: end;
+}
+
+@media only screen and (max-width: 768px) {
+    .graph-content {
+        width: 90%;
+        margin: 2% auto;
+    }
+    .status-code {
+        vertical-align: middle;
+        margin: auto 0;
+    }
+    .budget-status {
+        justify-content: start;
+    }
+}

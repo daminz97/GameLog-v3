@@ -1,0 +1,97 @@
+{% extends "app_gamelog/base.html" %}
+
+{% load static %}
+
+{% block title %}
+<title>{{ name }}</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app_gamelog/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'app_gamelog/css/game_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="detail-content">
+    <img src="{{ image_url }}" class="game-detail-image">
+    <div class="game-detail-info">
+        <h4 class="game-name d-flex align-items-center">
+            {{ name }}
+            {% if publisher %}
+            <a href="{% url 'profile' publisher.username %}"><span class="game-publisher badge rounded-pill bg-warning">{{ publisher.first_name }}</span></a>
+            {% endif %}
+        </h4>
+        <span class="game-platform">{{ platform }}</span>
+        <span class="game-genre badge rounded-pill bg-primary">{{ genre }}</span>
+        {% if owned %}
+        <span class="game-ownership badge rounded-pill bg-success">Owned</span>
+        {% endif %}
+    </div>
+</div>
+{% if owned %}
+<div class="game-log-btn-group">
+    <button id="add-game-log-submit" class="btn btn-success rounded-pill add-game-log-btn" name="add-game-log-submit"><i class="fas fa-plus-circle"></i> a Log</button>
+    <button type="submit" id="remove-game-reset" class="btn btn-danger rounded-pill remove-game-btn" name="remove-game-submit" form="remove_from_library_form"><i class="fas fa-times-circle"></i> from Library</button>
+</div>
+<div class="add-log-form-container">
+    <form id="remove_from_library_form" action="{% url 'remove_from_library' game_id %}" method="post">{% csrf_token %}</form>
+    <div class="add-log-form-content">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <form class="col-md-10" method="post" id="add-log-form" action="{% url 'add_log' game_id %}">{% csrf_token %}
+                {{ add_log_form }}
+            </form>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+    <div class="form-btn-group">
+        <button type="submit" class="btn btn-success add-log-submit" name="add-log-submit" form="add-log-form"><i class="fas fa-check-circle"></i></button>
+        <button type="reset" class="btn btn-warning add-log-reset" name="add-log-reset" form="add-log-form"><i class="fas fa-undo"></i></button>
+    </div>
+</div>
+
+<div class="log-content">
+    <div class="row">
+        {% for log in logs %}
+        <div class="col-md-12 log-detail">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-10 d-flex align-items-center">
+                            <h5 class="card-title mb-0">You played {{ log.duration }} hrs on {{ log.date }}.</h5>
+                            <!-- <p class="card-text">Yo your game stat is impressive!</p> -->
+                        </div>
+                        <div class="col-sm-2 card-btn-group d-flex align-items-center">
+                            <form class="remove-log-form" id="form{{ log.id }}" method="post" action="{% url 'remove_log' game_id log.id %}" >{% csrf_token %}</form>
+                            <button type="submit" class="btn btn-danger card-btn" form="form{{ log.id }}"><i class="fas fa-minus-circle"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+{% if not is_publisher %}
+<div class="game-log-btn-group">
+    <a class="btn btn-success rounded-pill add-game-toggle-btn"><i class="fas fa-plus-circle"></i> to Library</a>
+</div>
+<div class="add-to-library-form-container">
+    <div class="add-to-library-form-content">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <form class="col-md-10" method="post" id="add-to-library-form" action="{% url 'add_to_library' game_id %}">{% csrf_token %}
+                {{ add_to_library_form }}
+            </form>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+    <div class="form-btn-group">
+        <button type="submit" class="btn btn-success add-to-library-submit" name="add-to-library-submit" form="add-to-library-form"><i class="fas fa-check-circle"></i></button>
+        <button type="reset" class="btn btn-warning add-to-library-reset" name="add-to-library-reset" form="add-to-library-form"><i class="fas fa-undo"></i></button>
+    </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

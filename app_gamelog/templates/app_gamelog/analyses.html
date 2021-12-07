@@ -1,0 +1,41 @@
+{% extends "app_gamelog/base.html" %}
+
+{% load static %}
+
+{% block title %}
+<title>Analyses</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app_gamelog/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'app_gamelog/css/analyses.css' %}">
+{% endblock %}
+
+{% block ref %}
+<script src="https://d3js.org/d3.v7.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="graph-content">
+    <div class="row heading">
+        <div class="col-md-6 d-flex chart-title">
+            <h1 class="title"><i class="fas fa-chart-area"></i> Gaming Time</h1>
+        </div>
+        <div class="col-md-6 d-flex budget-status">
+            <i class="fas fa-check-circle status-code"></i>
+        </div>
+    </div>
+    <canvas></canvas>
+</div>
+<div class="graph-content heading">
+    <div class="row">
+        <div class="col-md-6 d-flex chart-title">
+            <h1 class="title"><i class="fas fa-chart-pie"></i> Gaming Cost</h1>
+        </div>
+        <div class="col-md-6 d-flex budget-status">
+            <i class="fas fa-exclamation-circle status-code"></i>
+        </div>
+    </div>
+    <canvas></canvas>
+</div>
+{% endblock %}

@@ -1,0 +1,177 @@
+/* user profile section */
+.common-container {
+    width: 50%;
+}
+.profile-content {
+    margin: 2% auto;
+}
+.profile-edit-btn {
+    vertical-align: middle;
+    margin: auto 0;
+}
+.connect-btn {
+    vertical-align: middle;
+    margin: auto 0;
+}
+#follow-form {
+    display: none;
+}
+#unfollow-form {
+    display: none;
+}
+.profile-detail {
+    text-align: center;
+    vertical-align: middle;
+    margin: auto;
+    padding: 2%;
+    line-height: 2em;
+    background-color: rgb(230, 221, 196);
+    border-radius: 25px;
+    border: rgb(103, 137, 131) 3px dashed;
+}
+.profile-label {
+    font-weight: bolder;
+}
+.profile-info-container {
+    width: 100%;
+    margin: auto 0;
+}
+
+/* avatar hover effect */
+.avatar-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+#avatar {
+    display: block;
+    width: 80%;
+    height: auto;
+    border: rgb(103, 137, 131) 3px solid;
+    border-radius: 50%;
+    margin: auto;
+}
+.avatar-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 80%;
+    border-radius: 50%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: rgb(24, 29, 49);
+    margin: auto;
+}
+.avatar-container:hover .avatar-overlay {
+    opacity: .8;
+}
+.overlay-icon {
+    color: rgb(230, 221, 196);
+    font-size: 2vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+.fa-pen:hover {
+    color: rgb(230, 221, 196);
+}
+
+/* avatar selection options */
+.update-avatar-container {
+    display: none;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+.rounded-avatar-option {
+    margin: 0 auto;
+    padding: 1%;
+    text-align: center;
+}
+.avatar-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.avatar-radio-img {
+    width: 80%;
+    height: auto;
+    object-fit: cover;
+    border: rgb(103, 137, 131) 3px solid;
+    border-radius: 50%;
+}
+.avatar-radio-img:hover {
+    box-shadow: 0 0 8px 0 rgba(13, 110, 253, 0.6), 0 0 20px 0 rgba(13, 110, 253, 0.2);
+}
+.avatar-radio + .avatar-radio {
+    cursor: pointer;
+}
+.avatar-radio:checked + .avatar-radio-img {
+    outline: rgb(13, 110, 253) 3px solid;
+}
+
+/* update profile form */
+.update-form-container {
+    display: none;
+    margin: auto;
+    height: 100%;
+    width: 50%;
+    text-align: center;
+}
+
+.feeds-content {
+    margin: 5% auto;
+}
+.card-group {
+    width: 100%;
+    background-color: rgb(230, 221, 196);
+    border: rgb(103, 137, 131) 3px dashed;
+    border-radius: 25px;
+    margin: auto;
+}
+.card {
+    margin: 1%;
+    border-radius: 25px;
+}
+.card-btn-group {
+    margin: auto;
+    text-align: center;
+}
+
+.publish-game-container {
+    display: none;
+}
+.publish-game-container {
+    text-align: center;
+    margin: 0 auto;
+}
+.publish-game-container > .form-btn-group {
+    text-align: center;
+}
+
+.game-box {
+    margin: 5% auto;
+}
+.game-library {
+    width: 100%;
+    background-color: rgb(230, 221, 196);
+    border: rgb(103, 137, 131) 3px dashed;
+    border-radius: 25px;
+    margin: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .common-container {
+        width: 90%;
+    }
+    .overlay-icon {
+        font-size: 10vw;
+    }
+}

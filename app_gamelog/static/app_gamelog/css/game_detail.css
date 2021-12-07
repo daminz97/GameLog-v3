@@ -1,0 +1,94 @@
+.detail-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin: 2% auto;
+    width: 50%;
+    position: relative;
+    text-align: start;
+    color: white;
+}
+.game-detail-image {
+    border-radius: 25px 25px 0 0;
+}
+.game-detail-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(103, 137, 131, 0.7);
+    width: 100%;
+    padding: 3%;
+}
+.game-name a {
+    margin-left: 1%;
+}
+.game-log-btn-group {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+.add-to-library-form-container,
+.add-log-form-container {
+    display: none;
+    width: 50%;
+    text-align: center;
+    margin: 2% auto;
+    background-color: rgb(230, 221, 196);
+    border: rgb(103, 137, 131) 3px dashed;
+    border-radius: 25px;
+}
+.add-to-library-form-content,
+.add-log-form-content {
+    width: 100%;
+}
+.game-log-btn-group {
+    margin: 2% auto;
+}
+.game-log-btn-group button {
+    margin: 0 2%;
+}
+#remove_from_library_form {
+    display: none;
+}
+
+.log-content {
+    width: 50%;
+    margin: 2% auto;
+}
+.remove-log-form {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .detail-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        margin: 2% auto;
+        width: 90%;
+        position: relative;
+        text-align: start;
+        color: white;
+    }
+    .game-log-btn-group {
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    .add-to-library-form-container,
+    .add-log-form-container {
+        display: none;
+        width: 90%;
+        text-align: center;
+        margin: 2% auto;
+        background-color: rgb(230, 221, 196);
+        border: rgb(103, 137, 131) 3px dashed;
+        border-radius: 25px;
+    }
+    .log-content {
+        width: 90%;
+        margin: 2% auto;
+    }
+}

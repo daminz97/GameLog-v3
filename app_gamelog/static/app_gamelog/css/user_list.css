@@ -1,0 +1,28 @@
+.user-list-content {
+    width: 100%;
+    margin: 2% auto;
+    padding: 2%;
+}
+.user-list-heading {
+    width: 50%;
+    margin: 2% auto;
+}
+.following-list,
+.follower-list {
+    width: 50%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: auto;
+    background-color: rgb(230, 221, 196);
+    border: rgb(103, 137, 131) 3px dashed;
+    border-radius: 25px;
+}
+.following-list ul,
+.follower-list ul {
+    list-style-type: none;
+    align-items: center;
+    padding: 2%;
+    margin: auto 0;
+    vertical-align: middle;
+}

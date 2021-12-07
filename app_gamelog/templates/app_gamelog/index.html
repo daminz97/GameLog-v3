@@ -1,0 +1,53 @@
+{% extends "app_gamelog/base.html" %}
+
+{% load static %}
+
+{% block title %}
+<title>GameLog</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app_gamelog/css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="feeds">
+    <div class="row heading">
+        <h1 class="title col-md-12">Recent Feeds</h1>
+    </div>
+    <div class="card-group">
+        <div class="row">
+            {% for feed in all_feeds %}
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ feed.date }}</h5>
+                        {% if feed.action == 'purchased' %}
+                            {% if feed.user == request.user %}
+                            <p class="card-text">You {{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a> for ${{ feed.value }}.</p>
+                            {% else %}
+                            <p class="card-text"><a href="{% url 'profile' feed.user.username %}">{{ feed.user.first_name }}</a> {{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a> for ${{ feed.value }}.</p>
+                            {% endif %}
+                        {% elif feed.action == 'played' %}
+                            {% if feed.user == request.user %}
+                            <p class="card-text">You {{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a> for {{ feed.value }}hrs.</p>
+                            {% else %}
+                            <p class="card-text"><a href="{% url 'profile' feed.user.username %}">{{ feed.user.first_name }}</a> {{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a> for {{ feed.value }}hrs.</p>
+                            {% endif %}
+                        {% elif feed.action == 'published' %}
+                            <p class="card-text"><a href="{% url 'profile' feed.user.username %}">{{ feed.user.first_name }}</a> {{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a>.</p>
+                        {% else %}
+                            {% if feed.target_user == request.user %}
+                            <p class="card-text"><a href="{% url 'profile' feed.user.username %}">{{ feed.user.first_name }}</a> {{ feed.action }} you.</p>
+                            {% else %}
+                            <p class="card-text"><a href="{% url 'profile' feed.user.username %}">{{ feed.user.first_name }}</a> {{ feed.action }} <a href="{% url 'profile' feed.target_user.username %}">{{ feed.target_user.first_name }}.</a></p>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

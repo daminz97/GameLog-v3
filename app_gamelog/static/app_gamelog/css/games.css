@@ -1,0 +1,61 @@
+/* show search menu */
+.options {
+    width: 50%;
+}
+.games-nav-bar {
+    justify-content: start;
+}
+#show-nav-container {
+    align-items: center;
+    justify-content: end;
+}
+#pills-tabContent {
+    display: none;
+}
+
+/* game cards content */
+.games-content {
+    margin: 2% 5%;
+}
+.game-card {
+    width: 20vw;
+    height: max-content;
+    margin: 3% 0;
+}
+.game-card:hover {
+    box-shadow: 0 0 8px 0 rgba(13, 110, 253, 0.6), 0 0 20px 0 rgba(13, 110, 253, 0.2);
+}
+.game-card-img {
+    width: 100%;
+    height: 15vh;
+    object-fit: cover;
+    border-radius: 25px 25px 0 0;
+}
+.game-card-title {
+    font-size: 1em;
+}
+
+@media only screen and (max-width: 768px) {
+    .options {
+        width: 100%;
+        margin: 2% auto;
+    }
+    .games-nav-bar {
+        justify-content: center;
+        margin-bottom: 2%;
+    }
+    #show-nav-container {
+        align-items: center;
+        justify-content: center;
+    }
+    .game-card {
+        width: 80vw;
+        height: max-content;
+    }
+    .game-card-img {
+        width: 80vw;
+        height: 15vh;
+        object-fit: cover;
+        border-radius: 25px 25px 0 0;
+    }
+}

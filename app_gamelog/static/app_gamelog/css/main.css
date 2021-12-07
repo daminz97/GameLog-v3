@@ -1,0 +1,134 @@
+.options {
+    width: 50%;
+    margin: 2% auto;
+}
+.authentication-nav-bar {
+    justify-content: start;
+}
+.authentication-bar-status {
+    align-items: center;
+    justify-content: end;
+}
+form {
+    margin: 0 auto;
+    padding: 2% 0;
+    text-align: center;
+}
+form label {
+    display: inline-block;
+    width: 30%;
+    margin: .5% auto;
+    text-align: left;
+}
+form input,
+form select {
+    display: inline-block;
+    overflow: hidden;
+    margin: .5% auto;
+    text-align: center;
+    width: 40%;
+    border: rgb(103, 137, 131) 2px solid;
+    border-radius: 25px;
+    outline: none;
+    height: 2rem;
+}
+
+.tab-content {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+    background-color: rgb(230, 221, 196);
+    border: rgb(103, 137, 131) 3px dashed;
+    border-radius: 25px;
+}
+.tab-pane {
+    width: 100%;
+}
+.helptext {
+    display: block;
+    font-size: 1em;
+    color: rgb(103, 137, 131);
+    margin: .5% auto;
+    text-align: center;
+    width: 100%;
+}
+.form-btn-group {
+    margin: 2% auto;
+}
+
+.feeds {
+    width: 50%;
+    margin: 2% auto;
+}
+.card-group {
+    width: 100%;
+    margin: auto;
+    padding: 2%;
+    background-color: rgb(230, 221, 196);
+    border: rgb(103, 137, 131) 3px dashed;
+    border-radius: 25px;
+}
+.card {
+    margin: 1%;
+    border-radius: 25px;
+}
+.card-btn-group {
+    margin: auto;
+    text-align: center;
+}
+
+.feeds-user-avatar {
+    display: block;
+    width: 60%;
+    height: auto;
+    border-radius: 50%;
+    margin: auto;
+}
+.feeds-img-container {
+    justify-content: center;
+    align-items: center;
+}
+.feeds-content-container {
+    justify-content: start;
+    align-items: center;
+}
+
+
+@media only screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+    h4, h5, span {
+        font-size: 1rem;
+    }
+    button, p {
+        font-size: .7rem;
+    }
+    .options {
+        width: 100%;
+        margin: 2% auto;
+    }
+    .authentication-nav-bar {
+        align-items: center;
+        justify-content: center;
+    }
+    .authentication-bar-status {
+        justify-content: center;
+        align-items: center;
+    }
+    form label {
+        display: block;
+        width: 90%;
+    }
+    form input,
+    form select {
+        display: block;
+        width: 90%;
+    }
+    .tab-content {
+        width: 90%;
+    }
+    .feeds {
+        width: 90%;
+    }
+}

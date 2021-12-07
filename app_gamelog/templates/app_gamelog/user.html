@@ -1,0 +1,345 @@
+{% extends "app_gamelog/base.html" %}
+
+{% load static %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app_gamelog/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'app_gamelog/css/user.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- user profile content -->
+<div class="profile-content common-container">
+    <div class="row heading">
+        <div class="col-md-9 d-flex justify-content-start">
+            {% if request_user.id == load_user.id %}
+            <h1 class="title">Ciao! <span id="user-fullname">{{ fullname }}</span></h1>
+            {% else %}
+            <h1 class="title"><span id="user-fullname">{{ fullname }}</span></h1>
+            {% endif %}
+        </div>
+        {% if request_user.id == load_user.id %}
+        <div class="col-md-3 d-flex justify-content-end">
+            <a class="btn btn-light rounded-pill profile-edit-btn" id="profile-edit-btn"><i class="fas fa-edit"></i> Change Profile</a>
+        </div>
+        {% else %}
+        {% if follow %}
+        <form method="post" id="unfollow-form" action="{% url 'unfollow' username %}">{% csrf_token %}</form>
+        <div class="col-md-3 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary rounded-pill connect-btn" form="unfollow-form"><i class="fas fa-heart-broken"></i> Unfollow</button>
+        </div>
+        {% else %}
+        <form method="post" id="follow-form" action="{% url 'follow' username %}">{% csrf_token %}</form>
+        <div class="col-md-3 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary rounded-pill connect-btn" form="follow-form"><i class="fas fa-handshake"></i> Follow</button>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+    <div class="row profile-detail">
+        <div class="col-md-1"></div>
+        <div class="col-md-4 d-flex align-items-center">
+            <div class="avatar-container">
+                <img id="avatar" src="{{ avatar }}" alt="user avatar">
+                {% if request_user.id == load_user.id %}
+                <a id="avatar-btn" class="avatar-overlay">
+                    <div class="overlay-icon"><i class="fas fa-pen"></i></div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+            <div class="profile-info-container">
+                {% if request_user.id == load_user.id %}
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 profile-label">Username</div>
+                        <div class="col-md-6"><span id="user-username">{{ username }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 profile-label">Email</div>
+                        <div class="col-md-6"><span id="user-email">{{ email }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        {% if request_user.is_publisher %}
+                        <div class="col-md-4 profile-label">Name</div>
+                        {% else %}
+                        <div class="col-md-4 profile-label">First Name</div>
+                        {% endif %}
+                        <div class="col-md-6"><span id="user-fname">{{ fname }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    {% if not request_user.is_publisher %}
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 profile-label">Last Name</div>
+                        <div class="col-md-6"><span id="user-lname">{{ lname }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 profile-label">Gender</div>
+                        <div class="col-md-6"><span id="user-email">{{ gender }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 profile-label">Email</div>
+                        <div class="col-md-6"><span id="user-email">{{ email }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        {% if load_user.is_publisher %}
+                        <div class="col-md-4 profile-label">Name</div>
+                        {% else %}
+                        <div class="col-md-4 profile-label">First Name</div>
+                        {% endif %}
+                        <div class="col-md-6"><span id="user-fname">{{ fname }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    {% if not load_user.is_publisher %}
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 profile-label">Last Name</div>
+                        <div class="col-md-6"><span id="user-lname">{{ lname }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4 profile-label">Gender</div>
+                        <div class="col-md-6"><span id="user-email">{{ gender }}</span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    {% endif %}
+                {% endif %}
+                <div class="row d-flex align-items-center justify-content-center mb-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5"><a class="btn btn-primary rounded-pill bg-primary" href="{% url 'following' load_user.username %}">{{ user_followed.count }} Following</a></div>
+                    <div class="col-md-5"><a class="btn btn-primary rounded-pill bg-primary" href="{% url 'follower' load_user.username %}">{{ followers.count }} Followers</a></div>
+                    <div class="col-md-1"></div>
+                </div>
+                {% if request_user.id == load_user.id %}
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <a class="btn btn-primary rounded-pill profile-edit-btn" id="password-reset-btn" href="{% url 'change_pass' %}"><i class="fas fa-key"></i> Change Password</a>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+{% if request_user.id == load_user.id %}
+<!-- user profile edit form -->
+<div class="update-form-container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <form class="col-md-10" method="POST" id="update-profile-form">{% csrf_token %}
+            {{ profile_update_form }}
+        </form>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="form-btn-group">
+        <button type="submit" id="update-profile-submit" class="btn btn-success update-profile-btn" name="update-profile-submit" form="update-profile-form"><i class="fas fa-check-circle"></i></button>
+        <button type="reset" id="update-profile-reset" class="btn btn-warning update-profile-btn" name="update-profile-reset" form="update-profile-form"><i class="fas fa-undo"></i></button>
+    </div>
+</div>
+
+<!-- user avatar edit form -->
+<div class="update-avatar-container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <form class="col-md-10" method="POST" id="update-avatar-form">{% csrf_token %}
+            <div class="row">
+                {% for key, value in avatar_dict.items %}
+                <label class="col-md-4 rounded-avatar-option" for="{{ key }}">
+                    <input type="radio" class="avatar-radio" name="avatars" id="{{ key }}" value="{{ value }}">
+                    <img class="avatar-radio-img" src="{{ value }}">
+                </label>
+                {% endfor %}
+                
+            </div>
+        </form>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="form-btn-group">
+        <button type="submit" id="update-avatar-submit" class="btn btn-success update-avatar-btn" name="update-avatar-submit" form="update-avatar-form"><i class="fas fa-check-circle"></i></button>
+        <button type="button" id="update-avatar-close" class="btn btn-danger update-avatar-btn" name="update-avatar-reset" form="update-avatar-form"><i class="fas fa-times-circle"></i></button>
+    </div>
+</div>
+
+{% if not request_user.is_publisher %}
+<div class="feeds-content common-container">
+    <div class="row heading">
+        <div class="col-md-12 d-flex justify-content-start">
+            <h1 class="title">Recent Updates</h1>
+        </div>
+    </div>
+    <div class="card-group">
+        <div class="row">
+            {% for feed in request_user_feeds %}
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ feed.date }}</h5>
+                        {% if feed.action == 'purchased' %}
+                        <p class="card-text">You {{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a> for ${{ feed.value }}.</p>
+                        {% elif feed.action == 'played' %}
+                        <p class="card-text">You {{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a> for {{ feed.value }}hrs.</p>
+                        {% else %}
+                        <p class="card-text">You {{ feed.action }} <a href="{% url 'profile' feed.target_user.username %}">{{ feed.target_user.first_name }}</a>.</p>
+                        {% endif %}
+                        <!-- <div class="row">
+                            <div class="col-md-12">
+                                
+                            </div>
+                            <div class="col-sm-4 card-btn-group">
+                                <a href="#" class="btn btn-success card-btn"><i class="fas fa-check-circle"></i></a>
+                                <a href="#" class="btn btn-danger card-btn"><i class="fas fa-times-circle"></i></a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="game-box common-container">
+    <div class="row heading">
+        <div class="col-md-9 d-flex justify-content-start">
+            <h1 class="title">Game Box</h1>
+        </div>
+        {% if request_user.is_publisher %}
+        <div class="col-md-3 d-flex justify-content-end align-items-center">
+            <a class="btn btn-primary rounded-pill publish-game-btn" id="publish-game-btn"><i class="fas fa-plus-circle"></i> Publish</a>
+        </div>
+        {% endif %}
+    </div>
+    {% if request_user.is_publisher %}
+    <div class="publish-game-container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <form class="col-md-10 publish-game-form" id="publish-game-form" method="post" action="{% url 'publish_game' username %}">{% csrf_token %}
+                {{ publish_game_form }}
+            </form>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="form-btn-group">
+            <button type="submit" class="btn btn-success publish-game-btn" name="publish-game-submit" form="publish-game-form"><i class="fas fa-check-circle"></i></button>
+            <button type="button" class="btn btn-danger publish-game-btn" name="publish-game-reset" form="publish-game-form"><i class="fas fa-times-circle"></i></button>
+        </div>
+    </div>
+    {% endif %}
+    <div class="game-library">
+        <div class="row">
+            {% for game in request_user_game_owned %}
+            <div class="col-md-12 log-detail">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-10 d-flex align-items-center">
+                                <a href="{% url 'game_detail' game.id %}"><h5 class="card-title mb-0">{{ game.name }}</h5></a>
+                                <!-- <p class="card-text">Yo your game stat is impressive!</p> -->
+                            </div>
+                            <div class="col-sm-2 card-btn-group d-flex align-items-center">
+                                <form class="remove-log-form" id="form-{{ game.id }}" method="post" action="{% url 'remove_from_library' game.id %}" >{% csrf_token %}</form>
+                                <button type="submit" class="btn btn-danger card-btn" form="form-{{ game.id }}"><i class="fas fa-minus-circle"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% else %}
+
+{% if not load_user.is_publisher %}
+<div class="feeds-content common-container">
+    <div class="row heading">
+        <div class="col-md-12 d-flex justify-content-start">
+            <h1 class="title">Recent Updates</h1>
+        </div>
+    </div>
+    <div class="card-group">
+        <div class="row">
+            {% for feed in load_user_feeds %}
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ feed.date }}</h5>
+                        {% if feed.action == 'purchased' %}
+                        <p class="card-text">{{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a> for ${{ feed.value }}.</p>
+                        {% elif feed.action == 'played' %}
+                        <p class="card-text">{{ feed.action }} <a href="{% url 'game_detail' feed.game.id %}">{{ feed.game.name }}</a> for {{ feed.value }}hrs.</p>
+                        {% else %}
+                        <p class="card-text">{{ feed.action }} <a href="{% url 'profile' feed.target_user.username %}">{{ feed.target_user.first_name }}</a>.</p>
+                        {% endif %}
+                        <!-- <div class="row">
+                            <div class="col-md-12">
+                                
+                            </div>
+                            <div class="col-sm-4 card-btn-group">
+                                <a href="#" class="btn btn-success card-btn"><i class="fas fa-check-circle"></i></a>
+                                <a href="#" class="btn btn-danger card-btn"><i class="fas fa-times-circle"></i></a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="game-box common-container">
+    <div class="row heading">
+        <div class="col-md-12 d-flex justify-content-start">
+            <h1 class="title">Game Box</h1>
+        </div>
+    </div>
+    <div class="game-library">
+        <div class="row">
+            {% for game in load_user_game_owned %}
+            <div class="col-md-12 log-detail">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-10 d-flex align-items-center">
+                                <a href="{% url 'game_detail' game.id %}"><h5 class="card-title mb-0">{{ game.name }}</h5></a>
+                                <!-- <p class="card-text">Yo your game stat is impressive!</p> -->
+                            </div>
+                            <div class="col-sm-2 card-btn-group d-flex align-items-center">
+                                <form class="remove-log-form" id="form-{{ game.id }}" method="post" action="{% url 'remove_from_library' game.id %}" >{% csrf_token %}</form>
+                                <button type="submit" class="btn btn-danger card-btn" form="form-{{ game.id }}"><i class="fas fa-minus-circle"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

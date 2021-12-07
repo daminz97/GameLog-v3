@@ -1,0 +1,62 @@
+{% extends "app_gamelog/base.html" %}
+
+{% load static %}
+
+{% block title %}
+<title>Analyses</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app_gamelog/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'app_gamelog/css/user_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="user-list-content">
+    {% if following %}
+    <h1 class="title user-list-heading">Followings</h1>
+    <div class="following-list">
+        <ul>
+            {% for user in following %}
+            <div class="col-md-12 log-detail">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 d-flex align-items-center">
+                                <h5 class="card-title mb-0"><a href="{% url 'profile' user.user_target.username %}">{{ user.user_target.username }}</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if followers %}
+    <h1 class="title user-list-heading">Followers</h1>
+    <div class="follower-list">
+        {% for user in followers %}
+        <div class="col-md-12 log-detail">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-10 d-flex align-items-center">
+                            <h5 class="card-title mb-0"><a href="{% url 'profile' user.user_from.username %}">{{ user.user_from.username }}</a></h5>
+                        </div>
+                        {% if request_user.id == load_user.id %}
+                        <div class="col-md-2 card-btn-group d-flex align-items-center">
+                            <form class="remove-log-form" id="form{{ user.id }}" method="post" action="{% url 'unfollow' user.user_from.username %}" >{% csrf_token %}</form>
+                            <button type="submit" class="btn btn-danger card-btn" form="form{{ user.id }}"><i class="fas fa-minus-circle"></i></a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

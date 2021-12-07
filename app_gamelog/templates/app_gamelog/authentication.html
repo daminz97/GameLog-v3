@@ -1,0 +1,100 @@
+{% extends "app_gamelog/base.html" %}
+
+{% load static %}
+
+{% block title %}
+<title>GameLog</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app_gamelog/css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="options">
+    <div class="row">
+        <div class="col-md-6 d-flex authentication-nav-bar">
+            <ul class="nav nav-pills " id="index-forms" role="tablist">
+                {% if reset_pass %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="reset-pass-form-tab" data-bs-toggle="pill" data-bs-target="#reset-pass-form-pill" type="button" role="tab" aria-controls="reset-pass-form-pill" aria-selected="false">Change password</button>
+                </li>
+                {% elif only_login %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="login-form-tab" data-bs-toggle="pill" data-bs-target="#login-form-pill" type="button" role="tab" aria-controls="login-form-pill" aria-selected="false">Log in</button>
+                </li>
+                {% else %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="signup-form-tab" data-bs-toggle="pill" data-bs-target="#signup-form-pill" type="button" role="tab" aria-controls="signup-form-pill" aria-selected="true">Sign up</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="login-form-tab" data-bs-toggle="pill" data-bs-target="#login-form-pill" type="button" role="tab" aria-controls="login-form-pill" aria-selected="false">Log in</button>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="col-md-6 d-flex authentication-bar-status">
+            <span id="authentication-status">{{ msg }}</span>
+        </div>
+    </div>
+</div>
+<div class="tab-content" id="pills-tabContent">
+    {% if reset_pass %}
+    <div class="tab-pane fade show active" id="reset-pass-form-pill" role="tabpanel" aria-labelledby="reset-pass-form-tab">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <form class="col-md-10" method="post" id="reset-pass-form" action="{% url 'change_pass' %}">{% csrf_token %}
+                {{ reset_pass_form }}
+            </form>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="form-btn-group">
+            <button type="submit" id="reset-pass-submit" class="btn btn-success reset-pass-btn" name="reset-pass-submit" form="reset-pass-form"><i class="fas fa-check-circle"></i></button>
+            <button type="reset" id="reset-pass-reset" class="btn btn-warning reset-pass-btn" name="reset-pass-reset" form="reset-pass-form"><i class="fas fa-undo"></i></button>
+        </div>
+    </div>
+    {% elif only_login %}
+    <div class="tab-pane fade show active" id="login-form-pill" role="tabpanel" aria-labelledby="login-form-tab">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <form class="col-md-10" method="post" id="login-form" action="{% url 'login' %}">{% csrf_token %}
+                {{ login_form }}
+            </form>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="form-btn-group">
+            <button type="submit" id="login-submit" class="btn btn-success login-btn" name="login-submit" form="login-form"><i class="fas fa-check-circle"></i></button>
+            <button type="reset" id="login-reset" class="btn btn-warning login-btn" name="login-reset" form="login-form"><i class="fas fa-undo"></i></button>
+        </div>
+    </div>
+    {% else %}
+    <div class="tab-pane fade show active" id="signup-form-pill" role="tabpanel" aria-labelledby="signup-form-tab">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <form class="col-md-10" method="post" id="signup-form" action="{% url 'signup' %}">{% csrf_token %}
+                {{ signup_form }}
+            </form>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="form-btn-group">
+            <button type="submit" id="signup-submit" class="btn btn-success signup-btn" name="signup-submit" form="signup-form"><i class="fas fa-check-circle"></i></button>
+            <button type="reset" id="signup-reset" class="btn btn-warning signup-btn" name="signup-reset" form="signup-form"><i class="fas fa-undo"></i></button>
+        </div>
+    </div>
+    
+    <div class="tab-pane fade" id="login-form-pill" role="tabpanel" aria-labelledby="login-form-tab">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <form class="col-md-10" method="post" id="login-form" action="{% url 'login' %}">{% csrf_token %}
+                {{ login_form }}
+            </form>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="form-btn-group">
+            <button type="submit" id="login-submit" class="btn btn-success login-btn" name="login-submit" form="login-form"><i class="fas fa-check-circle"></i></button>
+            <button type="reset" id="login-reset" class="btn btn-warning login-btn" name="login-reset" form="login-form"><i class="fas fa-undo"></i></button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
