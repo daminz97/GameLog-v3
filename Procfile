@@ -1,1 +1,1 @@
-web: gunicorn gameslog.wsgi
+web: gunicorn project_gamelog.wsgi
