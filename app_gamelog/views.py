@@ -331,13 +331,13 @@ def analyses(request, username):
     request_user = request.user
     if load_user.id != request_user.id:
         return redirect('profile', username=load_user.username)
-    time_logs = Log.objects.filter(user=request_user)
-    cost_logs = OwnGame.objects.filter(user=request_user)
+    times_logs = GameLog.objects.filter(user=request_user)
+    costs_logs = OwnGame.objects.filter(user=request_user)
     steam_cost, xbox_cost, ps_cost, nin_cost = 0.0, 0.0, 0.0, 0.0
     total_cost = 0
     month_time = {}
 
-    for log in cost_logs:
+    for log in costs_logs:
         if log.game.platform == 'Steam':
             steam_cost += log.price
         elif log.game.platform == 'Xbox':
