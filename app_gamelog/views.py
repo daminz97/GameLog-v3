@@ -333,8 +333,40 @@ def analyses(request, username):
         return redirect('profile', username=load_user.username)
     time_logs = Log.objects.filter(user=request_user)
     cost_logs = OwnGame.objects.filter(user=request_user)
+    steam_cost, xbox_cost, ps_cost, nin_cost = 0.0, 0.0, 0.0, 0.0
+    total_cost = 0
+    month_time = {}
 
-    return render(request, 'app_gamelog/analyses.html', {})
+    for log in cost_logs:
+        if log.game.platform == 'Steam':
+            steam_cost += log.price
+        elif log.game.platform == 'Xbox':
+            xbox_cost += log.price
+        elif log.game.platform == 'PlayStation':
+            ps_cost += log.price
+        else:
+            nin_cost += log.price
+    
+    total_expenses = steam_cost + xbox_cost + ps_cost + nin_cost
+    
+    for log in times_logs:
+        month = log.date.strftime('%B')
+        if month in month_time:
+            month_time[month] += log.duration
+        else:
+            month_time[month] = log.duration
+    
+    context = {
+        'costs': [
+            {'platform': 'Steam', 'num': steam_cost, 'perct': round(100*steam_cost/total_expenses, 2)},
+            {'platform': 'Xbox', 'num': xbox_cost, 'perct': round(100*xbox_cost/total_expenses, 2)},
+            {'platform': 'PlayStation', 'num': ps_cost, 'perct': round(100*ps_cost/total_expenses, 2)},
+            {'platform': 'Nintendo', 'num': nin_cost, 'perct': round(100*nin_cost/total_expenses, 2)},
+        ],
+        'times': month_time
+    }
+
+    return render(request, 'app_gamelog/analyses.html', context)
 
 def login_view(request):
     if request.method == "POST":
