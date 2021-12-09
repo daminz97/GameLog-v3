@@ -123,7 +123,7 @@ def add_log(request, game_id):
 def remove_log(request, game_id, log_id):
     log = get_object_or_404(GameLog, pk=log_id)
     game = get_object_or_404(Game, pk=game_id)
-    feed = get_object_or_404(Feed, user=user, action='played', game=game, value=log.duration, date=log.date)
+    feed = get_object_or_404(Feed, user=request.user, action='played', game=game, value=log.duration, date=log.date)
     if request.method == "POST":
         log.delete()
         feed.delete()
